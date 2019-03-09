@@ -1,0 +1,100 @@
+import random
+
+# Set the initial total score for the 100 rounds
+score1 = 0
+score2 = 0
+
+player1 = input('Enter player1\'s name: ')
+player2 = input('Enter player2\'s name: ')
+
+# Set the initial mental health, each false start could cause 1 point minus from their mental health points
+mental_health1 = 10
+mental_health2 = 10
+
+# When the false start is false, that means that there's no one has a false start in this 20 rounds. Vice versa.
+false_start = False
+
+print('')
+print("This is Cadet men's saber for the national fencing league. The semifinal will be held between ", player1,
+      " and ", player2, ".")
+
+
+# 20 rounds count as 1 big round
+for i in range(1, 6):
+    print('')
+    print('Where to attack, arm, body, or head?')
+    place1 = input('For ' + player1 + ': ')
+    place2 = input('For ' + player2 + ': ')
+
+    # Set the initial temporary score for each 20 rounds
+    temp_score1 = 0
+    temp_score2 = 0
+
+    j = 0
+
+    while j < 20:
+        false_start = False
+        j += 1
+
+        # If one player's mental health is 0, then he loses the game.
+        if mental_health1 == 0 or mental_health2 == 0:
+            break
+
+        false_start1 = random.randint(0, 100)
+        false_start2 = random.randint(0, 100)
+        random_win = random.randint(0, 100)
+
+        # Set the false start percentage for each 1 round to 5%
+        if false_start1 in range(50, 55):
+            false_start = True
+            mental_health1 -= 1
+        if false_start2 in range(50, 55):
+            false_start = True
+            mental_health2 -= 1
+
+        if false_start == True:
+            j -= 1
+        else:
+            if random_win in range(0, 50):
+                temp_score1 += 1
+            else:
+                temp_score2 += 1
+
+    score1 += temp_score1
+    score2 += temp_score2
+
+    if mental_health1 == 0 or mental_health2 == 0:
+        break
+
+    print('')
+    print('After attacking', player2, '\'s', place2, ', Score for', player1, 'in round', i, 'is:', temp_score1)
+    print('After attacking', player1, '\'s', place1, ', Score for', player2, 'in round', i, 'is:', temp_score2)
+    print('Mental Health for', player1, 'after round', i, 'is:', mental_health1)
+    print('Mental Health for', player2, 'after round', i, 'is:', mental_health2)
+
+    if score1 > score2:
+        print(player1, 'is leading!')
+    elif score1 < score2:
+        print(player2, 'is leading!')
+    else:
+        print(player1, 'and', player2, 'have the same score!')
+
+print('')
+
+print('Total score for', player1, 'is:', score1)
+print('Total score for', player2, 'is:', score2)
+print('Mental Health for', player1, 'is:', mental_health1)
+print('Mental Health for', player2, 'is:', mental_health2)
+
+if mental_health1 == 0 and mental_health2 == 0:
+    print('Both', player1, 'and', player2, 'lose the national fencing league!')
+elif mental_health2 == 0:
+    print(player1, 'wins the national fencing league!')
+elif mental_health1 == 0:
+    print(player2, 'wins the national fencing league!')
+elif score1 > score2:
+    print(player1, 'wins the national fencing league!')
+elif score1 < score2:
+    print(player2, 'wins the national fencing league!')
+else:
+    print('Both', player1, 'and', player2, 'win the national fencing league!')
